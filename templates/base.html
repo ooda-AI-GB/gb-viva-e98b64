@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Expense Tracker</h2>
+            </div>
+            {% if user %}
+            <div class="user-info">
+                <p>Welcome, <strong>{{ user.name }}</strong></p>
+                <p><small>({{ user.role.replace('_', ' ') | title }})</small></p>
+            </div>
+            <ul>
+                <li><a href="/dashboard">Dashboard</a></li>
+                {% if user.role == 'employee' %}
+                <li><a href="/my-expenses">My Expenses</a></li>
+                <li><a href="/submit">Submit Expense</a></li>
+                {% endif %}
+                {% if user.role == 'finance_manager' %}
+                <li><a href="/approvals">Approvals</a></li>
+                {% endif %}
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+            {% endif %}
+        </nav>
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>

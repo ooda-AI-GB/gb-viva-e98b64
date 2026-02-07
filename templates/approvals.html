@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Expense Approvals{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>Pending Expense Approvals</h1>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.username }}</td>
+                <td>{{ expense.date }}</td>
+                <td>{{ expense.category.value | title }}</td>
+                <td>${{ "%.2f"|format(expense.amount) }}</td>
+                <td>{{ expense.description }}</td>
+                <td class="actions">
+                    <form action="/approve/{{ expense.id }}" method="post" style="display: inline;">
+                        <button type="submit" class="btn-approve">Approve</button>
+                    </form>
+                    <form action="/reject/{{ expense.id }}" method="post" style="display: inline;">
+                        <button type="submit" class="btn-reject">Reject</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6">There are no pending expenses to review.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}My Expenses{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>My Submitted Expenses</h1>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.date }}</td>
+                <td>{{ expense.category.value | title }}</td>
+                <td>${{ "%.2f"|format(expense.amount) }}</td>
+                <td>{{ expense.description }}</td>
+                <td>
+                    <span class="status-pill {{ expense.status.value }}">{{ expense.status.value | title }}</span>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">You have not submitted any expenses yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

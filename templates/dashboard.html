@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>Dashboard</h1>
+</div>
+
+<div class="summary-cards">
+    <div class="card">
+        <h3>Total This Month</h3>
+        <p>${{ total_this_month }}</p>
+    </div>
+    <div class="card pending">
+        <h3>Pending Approvals</h3>
+        <p>{{ pending_approvals }}</p>
+    </div>
+    <div class="card approved">
+        <h3>Approved Total (All Time)</h3>
+        <p>${{ approved_total }}</p>
+    </div>
+    <div class="card rejected">
+        <h3>Rejected Total (All Time)</h3>
+        <p>${{ rejected_total }}</p>
+    </div>
+</div>
+
+<div class="chart-container">
+    <h3>Monthly Approved Trend (Last 7 Months)</h3>
+    <div class="chart">
+        {% for month, total in monthly_totals.items() %}
+        <div class="bar-container">
+            <div class="bar" style="height: {{ (total / max_total * 100) if max_total > 0 else 0 }}%;">
+                <span class="bar-label">${{ "%.2f"|format(total) }}</span>
+            </div>
+            <div class="month-label">{{ month }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
