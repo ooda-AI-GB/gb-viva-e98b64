@@ -181,4 +181,4 @@ def reject_expense(expense_id: int, current_user: dict = Depends(get_current_use
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8081)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
